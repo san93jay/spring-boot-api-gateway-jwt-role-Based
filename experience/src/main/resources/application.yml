@@ -1,0 +1,61 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+#spring:
+#  application:
+#    name: experience
+#  jpa:
+#   properties:
+#    hibernate:
+#     dialect: org.hibernate.dialect.PostgreSQLDialect
+#     ddl-auto: update
+#     show-sql: true
+#  datasource:
+#    username: ${database.user:postgres}
+#    password: ${database.password:sanjay}
+#    url: ${database.url:jdbc:postgresql://localhost:5432/experience?createDatabaseIfNotExist=true}
+#
+#
+#    initialization-mode: always
+#    initialize: true
+#    schema: classpath:/schema.sql
+#    continue-on-error: true
+spring:
+  application:
+    name: experience
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/experience?createDatabaseIfNotExist=true
+    username: postgres
+    password: sanjay
+    driver-class-name: org.postgresql.Driver
+    # Keep the connection alive if idle for a long time (needed in production)
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+rest:
+  swagger:
+    enabled: true

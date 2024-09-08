@@ -1,0 +1,64 @@
+spring:
+    application:
+      name: dashboardgateway
+    cloud:
+      gateway:
+        discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+        enabled: true
+        routes:
+          - id: dashboard
+            uri: http://192.168.18.71:8080
+
+            #uri: lb://dashboard
+            predicates:
+              - Path=/v1/dashBoard/*
+            filter: APIGatewayAuthenticationFilter
+#              name: Path
+#              args: /v1/dashBoard/**
+          - id: experience
+            uri: http://192.168.18.71:8081
+            #uri: lb://experience
+            predicates:
+              - Path=/v1/experience/*
+            filter: APIGatewayAuthenticationFilter
+
+          - id: auth-service
+            uri: http://192.168.18.71:8083
+            predicates:
+              - Path=/api/auth/*,/api/role/*
+
+
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+rest:
+  swagger:
+    enabled: true
+
+jwt:
+  signing-Key: va6w3Fr1go//sanjay/uma
+
+
+

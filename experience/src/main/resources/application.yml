@@ -14,7 +14,7 @@ server:
 #     show-sql: true
 #  datasource:
 #    username: ${database.user:postgres}
-#    password: ${database.password:sanjay}
+#    password: ${database.password:}
 #    url: ${database.url:jdbc:postgresql://localhost:5432/experience?createDatabaseIfNotExist=true}
 #
 #
@@ -29,7 +29,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/experience?createDatabaseIfNotExist=true
     username: postgres
-    password: sanjay
+    password:
     driver-class-name: org.postgresql.Driver
     # Keep the connection alive if idle for a long time (needed in production)
     testWhileIdle: true

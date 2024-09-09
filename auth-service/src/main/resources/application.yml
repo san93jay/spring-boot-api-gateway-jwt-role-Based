@@ -13,7 +13,7 @@ spring:
         show-sql: true
   datasource:
     username: ${database.user:postgres}
-    password: ${database.password:sanjay}
+    password: ${database.password:}
     url: ${database.url:jdbc:postgresql://localhost:5432/auth-service?createDatabaseIfNotExist=true}
 
 

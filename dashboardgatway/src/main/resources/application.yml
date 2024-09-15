@@ -11,7 +11,7 @@ spring:
         enabled: true
         routes:
           - id: dashboard
-            uri: http://192.168.18.71:8080
+            uri: http://192.168.234.71:8080
 
             #uri: lb://dashboard
             predicates:
@@ -20,14 +20,14 @@ spring:
 #              name: Path
 #              args: /v1/dashBoard/**
           - id: experience
-            uri: http://192.168.18.71:8081
+            uri: http://192.168.234.71:8081
             #uri: lb://experience
             predicates:
               - Path=/v1/experience/*
             filter: APIGatewayAuthenticationFilter
 
           - id: auth-service
-            uri: http://192.168.18.71:8083
+            uri: http://192.168.234.71:8083
             predicates:
               - Path=/api/auth/*,/api/role/*
 
@@ -58,7 +58,7 @@ rest:
     enabled: true
 
 jwt:
-  signing-Key: va6w3Fr1go//sanjay/umasasas
+  signing-Key: va6w3Fr1go//sanjay/umasanjayvishwa
 
 
 

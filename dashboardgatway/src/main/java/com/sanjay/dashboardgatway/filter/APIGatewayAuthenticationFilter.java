@@ -1,13 +1,13 @@
 package com.sanjay.dashboardgatway.filter;
 
 import com.sanjay.dashboardgatway.config.GatewayAuthJWTUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class APIGatewayAuthenticationFilter extends AbstractGatewayFilterFactory<APIGatewayAuthenticationFilter.Config> {
@@ -19,6 +19,9 @@ public class APIGatewayAuthenticationFilter extends AbstractGatewayFilterFactory
 
     public static final String AUTH_TOKEN_PREFIX = "Bearer ";
 
+    @Autowired
+    RestTemplate restTemplate;
+
 
     public APIGatewayAuthenticationFilter() {
         super(Config.class);
@@ -29,22 +32,6 @@ public class APIGatewayAuthenticationFilter extends AbstractGatewayFilterFactory
         return ((exchange,chain)->{
             if(routeValidator.isSecured.test(exchange.getRequest())){
                 authenticateRequest(exchange.getRequest());
-
-                //header contains JWT
-       /*         if(!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
-                    throw new RuntimeException("Authorization header missed");
-                }
-                String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                    authHeader = authHeader.substring(7);
-                }
-        try{
-                gatewayAuthJWTUtil.validateToken(authHeader);
-
-            } catch (Exception e) {
-                System.out.println("invalid access...!");
-                throw new RuntimeException("un-authorized access to application");
-            }*/
         }
             return chain.filter(exchange);
         });
